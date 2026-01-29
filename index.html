@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scrolly Video Sequential Text</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* SCROLL SPACE */
+        .scroll-section {
+            height: 100vh;
+            position: relative;
+        }
+
+        /* VIDEO */
+        #scrolly-video {
+            position: sticky;
+            top: 50px;
+            width: 100%;
+            z-index: 1;
+        }
+
+        #scrolly-video::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        #scrolly-video > * {
+            position: relative;
+            z-index: 0;
+        }
+
+        /* TEXT */
+        .scroll-text {
+            position: fixed;
+            top: 50%;
+            width: 100%;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 2;
+            transition: transform 1s ease-out, opacity 0.5s ease-out;
+        }
+
+        /* ENTRY POSITIONS */
+        .text-bottom { transform: translateY(120vh); } 
+
+        /* ACTIVE */
+        .active { transform: translateY(-50%); opacity: 1; }
+
+        /* EXIT ANIMATIONS */
+        .exit-top { transform: translateY(-120vh); opacity: 0; }
+
+        /* MOBILE VIEW */
+        @media (max-width: 768px) {
+            .text-bottom { transform: translateY(120vh); }
+            .exit-top { transform: translateY(-120vh); opacity: 0; }
+            .active { transform: translateY(-50%); opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- VIDEO -->
+    <div id="scrolly-video"></div>
+
+    <div>
+        <!-- SCROLL TRIGGERS -->
+        <section class="scroll-section relative" data-text="bottom"></section>
+        <section class="scroll-section relative" data-text="left"></section>
+        <section class="scroll-section relative" data-text="right"></section>
+
+        <!-- TEXT -->
+        <div id="text-bottom" class="scroll-text text-bottom text-center">
+            <div class="w-full">
+                <div class="w-full flex flex-col text-white xl:px-0 lg:px-[14%] px-[13%] gap-4">
+                    <div>
+                        <p class="2xl:text-[70px] xl:text-[55px] lg:text-[50px] md:text-[40px] text-[30px] font-black uppercase tracking-tighter !leading-none xl:px-[20%] md:px-[15%] px-0">Smart Farming and Surveillance System</p>
+                    </div>
+                    <div class="xl:text-[18px] lg:text-[16px] md:text-[15px] text-[14px] font-light tracking-[1px] space-y-4">
+                        <div class="">Digitize and automate farm operations</div>
+                        <div class="flex 2xl:px-[28%] lg:px-[22%] md:px-[18%] gap-5">
+                            <p>Avasia Information Systems provides IoT sensors, network infrastructure, surveillance cameras, and data analytics tools. Avasia Agritech applies these technologies to monitor livestock, crops, and farm environments in real time. Efficient farm management, improved productivity, and secured farm assets.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="text-left" class="scroll-text text-bottom xl:text-left text-center 2xl:pl-[80px] xl:pl-[50px] lg:pl-[40px] lg:px-0">
+            <div class="w-full">
+                <div class="w-full flex flex-col text-white 2xl:pr-[70%] xl:pr-[60%] xl:px-0 lg:px-[14%] px-[13%] gap-4">
+                    <div>
+                        <p class="2xl:text-[70px] xl:text-[55px] lg:text-[50px] md:text-[40px] text-[30px] font-black uppercase tracking-tighter !leading-none">Agriculture Digital Experience</p>
+                    </div>
+                    <div class="xl:text-[18px] lg:text-[16px] md:text-[15px] text-[14px] font-light tracking-[1px] space-y-4">
+                        <div class="">Enhance customer and visitor interaction through technology</div>
+                        <div class="flex gap-5">
+                            <p>Avasia Information Systems develops digital platforms for e-commerce, booking systems, and customer data management. Avasia Agritech offers farm-to-table dining, agritourism, and wellness programs accessible through these online platforms. Seamless online engagement, direct-to-consumer sales, and elevated digital farm experience.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="text-right" class="scroll-text text-bottom xl:text-right text-center 2xl:pr-[80px] xl:pr-[50px] lg:pr-[40px] lg:px-0">
+            <div class="w-full">
+                <div class="w-full flex flex-col text-white 2xl:pl-[70%] xl:pl-[60%] xl:px-0 lg:px-[14%] px-[13%] gap-4">
+                    <div>
+                        <p class="2xl:text-[70px] xl:text-[55px] lg:text-[50px] md:text-[40px] text-[30px] font-black uppercase tracking-tighter !leading-none">FarmTech Learning and Innovation</p>
+                    </div>
+                    <div class="xl:text-[18px] lg:text-[16px] md:text-[15px] text-[14px] font-light tracking-[1px] space-y-4">
+                        <div class="">Build digital and agri-technical competencies for future-ready farmers</div>
+                        <div class="flex gap-5">
+                            <p>Avasia Information Systems conducts IT, automation, and data literacy training. Avasia Agritech provides the physical training ground for practical application of smart farming systems. A learning hub that empowers "Techno-Farmers" skilled in both agriculture and technology.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/scrolly-video@latest/dist/scrolly-video.js"></script>
+
+    <script>
+        new ScrollyVideo({
+            scrollyVideoContainer: "scrolly-video",
+            src: "farm.mp4",
+            sticky: true,
+            trackScroll: true
+        });
+
+        const sections = document.querySelectorAll(".scroll-section");
+        const texts = {
+            bottom: document.getElementById("text-bottom"),
+            left: document.getElementById("text-left"),
+            right: document.getElementById("text-right")
+        };
+
+        let lastScrollY = window.scrollY;
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const type = entry.target.dataset.text;
+                const textEl = texts[type];
+                const scrollingDown = window.scrollY > lastScrollY;
+
+                // CLEAR ALL EXIT STATES
+                textEl.classList.remove("exit-top");
+
+                if (entry.isIntersecting) {
+                    textEl.classList.add("active");
+                } else {
+                    textEl.classList.remove("active");
+
+                    if (scrollingDown) {
+                        textEl.classList.add("exit-top"); // always exit to top
+                    }
+                }
+            });
+
+            lastScrollY = window.scrollY;
+        }, { threshold: 0.6 });
+
+        sections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>
